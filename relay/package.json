@@ -1,0 +1,18 @@
+{
+  "name": "relay",
+  "version": "1.0.0",
+  "description": "A minimally mocked BTC relay.",
+  "main": "index.ts",
+  "author": "Interlay",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/chai": "^4.2.14",
+    "@types/mocha": "^8.2.0",
+    "@types/node": "^14.14.11",
+    "chai": "^4.2.0",
+    "hardhat": "^2.0.4",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.2"
+  }
+}
