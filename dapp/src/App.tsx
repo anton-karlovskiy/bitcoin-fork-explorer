@@ -1,25 +1,48 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Col, Container, Row, Table, Button } from 'react-bootstrap';
+import "./_general.scss";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+
+      <Container fluid>
+        <Row className="justify-content-md-center">
+          <Col md="auto">
+            <h1>Bitcoin Fork Explorer</h1>
+          </Col>
+        </Row>
+      </Container>
+      <Container>
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>Chain</th>
+              <th>Current height</th>
+              <th>Start height</th>
+              <th>Best block hash</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Main</td>
+              <td>1896819</td>
+              <td>1732322</td>
+              <td>00000000294f816121e3f5852b9dea772c590b5ffaa1cfd79be46499879065f2</td>
+              <td><Button variant="primary">Explore</Button></td>
+            </tr>
+            <tr>
+              <td>Fork 1</td>
+              <td>1894344</td>
+              <td>1894322</td>
+              <td>000000002db48f25d7a79bc6b7d45d70d77e2ebf13aa79e025dd013be2556cce</td>
+              <td><Button variant="primary">Explore</Button></td>
+            </tr>
+          </tbody>
+        </Table>
+      </Container>
+    </Container>
   );
 }
 
