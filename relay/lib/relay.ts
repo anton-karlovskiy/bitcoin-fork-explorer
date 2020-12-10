@@ -1,6 +1,5 @@
 import { Relay } from "../typechain/Relay";
 import { ethers } from "hardhat";
-import testChains from "./testData";
 
 // this remains constant if deployed on a fresh hardhat network
 // (but will change if redeployed without restarting the network)
@@ -14,16 +13,16 @@ export class RelayLib {
     this.relay = Relay.attach(address) as Relay;
   }
 
-  async storeTestBlockHeaders() {
-    for (let i = 0; i < testChains.length; i++) {
-      for (let j = 0; j < testChains[i].blocks.length; j++) {
-        await this.relay.store_block_header(
-          testChains[i].startBlock + j,
-          testChains[i].blocks[j],
-          i
-        );
-      }
-    }
+  async storeBlockHeader(
+    block_height: number,
+    block_hash: string,
+    chain_id: number
+  ) {
+    return await this.relay.store_block_header(
+      block_height,
+      block_hash,
+      chain_id
+    );
   }
 
   async getChainAtPosition(position: number) {
