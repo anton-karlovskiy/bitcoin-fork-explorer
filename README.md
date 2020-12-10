@@ -1,6 +1,6 @@
 # Displaying Bitcoin Forks
 
-Blockchains are actually not chains of blocks, but rather resemble a tree. When one parent block has more than one child block, the chain splits into one main chain and one or more forks.
+Blockchains are actually not chains of blocks but rather resemble a tree. When one parent block has more than one child block, the chain splits into one main chain and one or more forks.
 In this problem, we assume that we have a [BTC Relay](http://btcrelay.org/) deployed on Ethereum that stores a set of Bitcoin blockchains (one main chain and several forks).
 Your task is two-fold: First, you will need to add functions to the library to extract the information of chains from the Ethereum smart contract. Second, you will have to display the forks in some way in the UI.
 
@@ -18,12 +18,9 @@ On the library, you will have to write a function that provides the chain elemen
 - Sort the chain elements according to their `current_height`
 - Return the sorted list of elements to the UI
 
-You can get started in the library
-
 ### UI
 
 In the UI, you will have to create one or multiple pages that display the different forks. Ideally, a user can sensibly browse through the block headers. There is already a base suggestion available. Bootstrap is also already included, but feel free to switch to your favorite framework as well.
-
 
 ## Existing Code
 
@@ -31,7 +28,6 @@ There are two sub-projects in this repository:
 
 - `dapp`: includes some boilerplate react code.
 - `relay`: includes the smart contract and the outline for the library in `relay/lib`
-
 
 ### Lib
 
@@ -65,7 +61,7 @@ yarn start
 You are supposed to solve the task with the following requirements:
 
 * Preferred programming language: TypeScript
-* Accepted programming language: TypeSCript, JavaScript
+* Accepted programming language: TypeScript, JavaScript
 
 Your solution will be judged based on the following criteria:
 
