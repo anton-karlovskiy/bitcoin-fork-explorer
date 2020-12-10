@@ -26,7 +26,7 @@ contract Relay {
 
     // this function is a vast over-simplification
     function store_block_header(uint block_height , bytes32 block_hash, uint chain_id) public {
-        if (chains[chain_id].start_height == 0) {
+        if (chains[chain_id].best_block_hash == 0) {
             // store a new chain element
             Chain storage new_chain = chains[chain_id];
             new_chain.chain_id = chain_id;

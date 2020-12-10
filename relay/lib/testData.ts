@@ -1,0 +1,38 @@
+export default [
+  {
+    startBlock: 0,
+    blocks: [
+      "0x8c2923fbf03bb2343f8747f2149ea4fa3d130ff2e26c93b47216eec519286c17",
+      "0x99308eb5f886873fabd18875864bc27d067b9a77837ab5d829b64f1e9fb288ca",
+      "0x4fd172f5d1ef13a937e3fdcf81e2bbe97c83fee5b8c6979147e4f468a357f048",
+      "0x4eef4234e7dd70cc1b253a7846974ebdb25ed6a438e74b1f56e9825d167ae6b0",
+      "0x97b053dd08122a8ae9a16d233f0344ebab2fa45154aa1f19dec509ccb5de6c37",
+      "0xa78cbd57c60349e21a56952c277bdd21f57b1d315ecae96841db9b1b3553bb37", // 5
+      "0x4dbc300626ea25a58515cb5fcecc93abdb21090847d78da11fa390a08ada042e",
+      "0x1f3deb81f043e16a4df4b6e97b7d73217b5300bfdff2730ef53bd883713b4bad",
+      "0xa68d76861375e364a988d3b65893b8168b4ad79ada3a5608eb5cd5a963dc22f2",
+      "0x209132f1bbb893609db486252cb5044033d4b2c4d137329581b73982ae7358b7",
+      "0x98a8b069b02abb9b39d4a6d872e4e81a0e83ebccca9e42eab97ec301ce5a385a", // 10
+      "0xba2242e65801900a336b6983e30deaa9666b6f554e6692ca3350b6543da7a2ea",
+    ],
+  },
+  {
+    startBlock: 4,
+    blocks: [
+      "0xf27af77fcbadfc5b14c9db9fe5fc7658b53868111964d495100b28c09d8c2d73",
+      "0x8936494632f1b6e44c80ca84719ce9866d408ca178e8c8e9e47d74345c090582",
+    ],
+  },
+  {
+    startBlock: 4,
+    blocks: [
+      "0xfb9a73f69c8d05c3eadf716dcf7e5d851a2b766fc90f9f3cf7bc9eacaa050c09",
+    ],
+  },
+  {
+    startBlock: 11,
+    blocks: [
+      "0xc4cf2c7cf2158dc952d737df5f76196e18fbe5dddaacc6446436b8b5848605f7",
+    ],
+  },
+];

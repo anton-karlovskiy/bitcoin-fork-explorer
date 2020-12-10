@@ -6,7 +6,7 @@
   "scripts": {
     "hardhat": "hardhat node",
     "build": "hardhat compile && hardhat typechain",
-    "deploy": "hardhat run scripts/deploy.ts"
+    "deploy": "hardhat run scripts/deploy.ts --network localhost"
   },
   "author": "Interlay",
   "license": "MIT",
