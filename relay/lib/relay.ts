@@ -6,7 +6,7 @@ import { ethers } from "hardhat";
 const localHardhatAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
 export class RelayLib {
-  relay: Relay;
+  relay: Relay | undefined;
 
   async init(address = localHardhatAddress) {
     const Relay = await ethers.getContractFactory("Relay");
@@ -18,6 +18,9 @@ export class RelayLib {
     block_hash: string,
     chain_id: number
   ) {
+    if (!this.relay) {
+      throw new Error("Lib not initialised");
+    }
     return await this.relay.store_block_header(
       block_height,
       block_hash,
