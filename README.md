@@ -42,11 +42,19 @@ yarn hardhat
 ```
 
 In another terminal, compile and deploy the contracts as well as creating the typechain interfaces:
+
 ```bash
 cd relay
 yarn build
 yarn deploy
 ```
+
+Tip: you can link your projects with yarn to sync updates easily.
+
+```bash
+yarn link
+```
+
 ### UI
 
 To get started on the UI:
@@ -54,8 +62,10 @@ To get started on the UI:
 ```bash
 cd dapp
 yarn install
+yarn link relay
 yarn start
 ```
+
 ## Requirements and Criteria
 
 You are supposed to solve the task with the following requirements:

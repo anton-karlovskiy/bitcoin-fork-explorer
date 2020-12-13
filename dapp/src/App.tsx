@@ -6,8 +6,17 @@ import './_general.scss';
 function App() {
   // TODO: read the chain elements from the lib (smart contract)
   // TODO: display the different block headers/forks
-  const relay = new RelayLib();
-  // const chains = await relay.getChainAtPosition(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const relay = new RelayLib();
+      await relay.init();
+
+      const id = await relay.getMaxChainId();
+      console.log(id);
+    }
+    fetchData();
+  }, [])
 
   return (
     <Container>

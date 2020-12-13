@@ -1,5 +1,6 @@
 import { Relay } from "../typechain/Relay";
-import { ethers } from "hardhat";
+import { Relay__factory } from "../typechain/factories/Relay__factory";
+import { ethers } from "ethers";
 
 // this remains constant if deployed on a fresh hardhat network
 // (but will change if redeployed without restarting the network)
@@ -9,8 +10,8 @@ export class RelayLib {
   relay: Relay | undefined;
 
   async init(address = localHardhatAddress) {
-    const Relay = await ethers.getContractFactory("Relay");
-    this.relay = Relay.attach(address) as Relay;
+    const provider = ethers.getDefaultProvider();
+    this.relay = await Relay__factory.connect(address, provider) as Relay;
   }
 
   async storeBlockHeader(
@@ -36,7 +37,11 @@ export class RelayLib {
     // to implement
   }
 
-  async getMaxChainId() {
-    // to implement
+  async getMaxChainId(): Promise<number> {
+    if (!this.relay) {
+      throw new Error("Lib not initialised");
+    }
+
+    return (await (this.relay.get_max_chain_id())).toNumber();
   }
 }
