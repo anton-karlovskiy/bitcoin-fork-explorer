@@ -66,6 +66,8 @@ yarn link relay
 yarn start
 ```
 
+Make sure you have [Metamask](https://metamask.io/) installed in your browser, and set it to connect to your local hardhat node (if necessary, create a new network, setting the URL to `http://localhost:8545` and the Chain ID to `31337`).
+
 ## Requirements and Criteria
 
 You are supposed to solve the task with the following requirements:

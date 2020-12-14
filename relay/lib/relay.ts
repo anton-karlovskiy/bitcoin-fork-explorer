@@ -1,6 +1,7 @@
 import { Relay } from "../typechain/Relay";
 import { Relay__factory } from "../typechain/factories/Relay__factory";
 import { ethers } from "ethers";
+import detectEthereumProvider from "@metamask/detect-provider";
 
 // this remains constant if deployed on a fresh hardhat network
 // (but will change if redeployed without restarting the network)
@@ -10,8 +11,12 @@ export class RelayLib {
   relay: Relay | undefined;
 
   async init(address = localHardhatAddress) {
-    const provider = ethers.getDefaultProvider();
-    this.relay = await Relay__factory.connect(address, provider) as Relay;
+    const web3 = await detectEthereumProvider();
+    const provider = new ethers.providers.Web3Provider(
+      web3 as ethers.providers.ExternalProvider
+    );
+    await (provider.provider as any).enable();
+    this.relay = Relay__factory.connect(address, provider) as Relay;
   }
 
   async storeBlockHeader(
@@ -42,6 +47,6 @@ export class RelayLib {
       throw new Error("Lib not initialised");
     }
 
-    return (await (this.relay.get_max_chain_id())).toNumber();
+    return (await this.relay.get_max_chain_id()).toNumber();
   }
 }
