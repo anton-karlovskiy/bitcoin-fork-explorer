@@ -2,11 +2,13 @@
   "name": "relay",
   "version": "1.0.0",
   "description": "A minimally mocked BTC relay.",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "hardhat": "hardhat node",
-    "build": "hardhat compile && hardhat typechain",
-    "deploy": "hardhat run scripts/deploy.ts --network localhost"
+    "build": "hardhat compile && hardhat typechain && yarn tsc",
+    "deploy": "hardhat run scripts/deploy.ts --network localhost",
+    "tsc": "tsc -p . && cp typechain/*.d.ts dist/typechain/"
   },
   "author": "Interlay",
   "license": "MIT",
@@ -14,19 +16,24 @@
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.1",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@typechain/ethers-v5": "^5.0.0",
     "@types/chai": "^4.2.14",
     "@types/mocha": "^8.2.0",
     "@types/node": "^14.14.11",
     "chai": "^4.2.0",
-    "ethers": "^5.0.0",
     "hardhat": "^2.0.4",
+    "hardhat-typechain": "^0.3.3",
+    "ts-generator": "^0.1.1",
     "ts-node": "^9.1.1",
+    "typechain": "^4.0.1",
     "typescript": "^4.1.2"
   },
   "dependencies": {
-    "@typechain/ethers-v5": "^5.0.0",
-    "hardhat-typechain": "^0.3.3",
-    "ts-generator": "^0.1.1",
-    "typechain": "^4.0.1"
-  }
+    "@ethersproject/contracts": "^5.0.8",
+    "@metamask/detect-provider": "^1.2.0",
+    "ethers": "^5.0.0"
+  },
+  "files": [
+    "dist/"
+  ]
 }

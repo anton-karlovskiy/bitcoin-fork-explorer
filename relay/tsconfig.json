@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "target": "es5",
+    "module": "commonjs",
+    "outDir": "dist",
+    "declaration": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  },
+  "include": ["typechain", "scripts", "lib", "test", "index.ts"],
+  "exclude": ["./node_modules/*"],
+  "files": [
+    "./index.ts",
+    "./hardhat.config.ts"
+  ]
+}

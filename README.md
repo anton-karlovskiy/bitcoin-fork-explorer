@@ -42,11 +42,19 @@ yarn hardhat
 ```
 
 In another terminal, compile and deploy the contracts as well as creating the typechain interfaces:
+
 ```bash
 cd relay
 yarn build
 yarn deploy
 ```
+
+Tip: you can link your projects with yarn to sync updates easily.
+
+```bash
+yarn link
+```
+
 ### UI
 
 To get started on the UI:
@@ -54,8 +62,12 @@ To get started on the UI:
 ```bash
 cd dapp
 yarn install
+yarn link relay
 yarn start
 ```
+
+Make sure you have [Metamask](https://metamask.io/) installed in your browser, and set it to connect to your local hardhat node (if necessary, create a new network, setting the URL to `http://localhost:8545` and the Chain ID to `31337`).
+
 ## Requirements and Criteria
 
 You are supposed to solve the task with the following requirements:

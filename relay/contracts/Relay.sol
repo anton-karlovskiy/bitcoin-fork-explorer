@@ -34,8 +34,8 @@ contract Relay {
             new_chain.current_height = block_height;
             new_chain.best_block_hash = block_hash;
             new_chain.blocks[block_height] = block_hash;
-            chain_ids = chain_id;
             sorted_chains[chain_ids] = chain_id;
+            chain_ids += 1;
         } else {
             Chain storage existing_chain = chains[chain_id];
             existing_chain.current_height = block_height;
