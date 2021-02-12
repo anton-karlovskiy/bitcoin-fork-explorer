@@ -7,7 +7,7 @@ import detectEthereumProvider from "@metamask/detect-provider";
 // (but will change if redeployed without restarting the network)
 const localHardhatAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
-interface ChainMetadata {
+interface IChainMetadata {
   chainId: number,
   startHeight: number,
   currentHeight: number,
@@ -41,7 +41,7 @@ class RelayLib {
     );
   }
 
-  async getChainAtPosition(position: number): Promise<ChainMetadata> {
+  async getChainAtPosition(position: number): Promise<IChainMetadata> {
     if (!this.relay) {
       throw new Error("Lib not initialised");
     }
@@ -64,6 +64,7 @@ class RelayLib {
     return await this.relay.get_blocks_for_chain_id(id, height);
   }
 
+  // TODO: could be `getNumberOfChains`
   async getMaxChainId(): Promise<number> {
     if (!this.relay) {
       throw new Error("Lib not initialised");

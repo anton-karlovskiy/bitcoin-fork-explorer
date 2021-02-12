@@ -1,17 +1,18 @@
 
-import React from 'react';
-// TODO: should not use `react-bootstrap` due to an overhead
-import {
-  Col,
-  Container,
-  Row,
-  Table,
-  Button
-} from 'react-bootstrap';
+import * as React from 'react';
 import { RelayLib } from 'relay';
 
+import Container from 'parts/Container';
+import ChainsList from 'components/ChainsList';
 // TODO: should not use SASS in react development
 import './_general.scss';
+
+interface IChainMetadata {
+  chainId: number,
+  startHeight: number,
+  currentHeight: number,
+  bestBlockHash: string
+}
 
 function App() {
   // TODO: read the chain elements from the lib (smart contract)
@@ -23,14 +24,17 @@ function App() {
       await relay.init();
 
       try {
-        const id = await relay.getMaxChainId();
-        console.log(id);
+        // TODO: could be `numberOfChains`
+        const maxChainId = await relay.getMaxChainId();
+        const chainGetters =
+          Array<number>(maxChainId)
+            .fill(0)
+            .map((_, index) => relay.getChainAtPosition(index));
+        const theChains = await Promise.all(chainGetters);
+        setChains(theChains);
 
-        const chainMetadata = await relay.getChainAtPosition(1);
-        console.log('***** chainMetadata => ', chainMetadata);
-
-        const blockHash = await relay.getBlocksForChainId(0, 0);
-        console.log('***** blockHash => ', blockHash);
+        // TODO: later
+        // const blockHash = await relay.getBlocksForChainId(0, 0);
       } catch {
         console.error(
           'Failed to connect to contract! Please make sure your local hardhat node is running, and Metamask is connected to your localhost RPC (RPC URL: \'http://localhost:8545\', chain ID: \'31337\').'
@@ -39,52 +43,14 @@ function App() {
     })();
   }, []);
 
+  const [chains, setChains] = React.useState<IChainMetadata[]>([]);
+
   return (
     <Container>
-      <Container fluid>
-        <Row className='justify-content-md-center'>
-          <Col md='auto'>
-            <h1>Bitcoin Fork Explorer</h1>
-          </Col>
-        </Row>
-      </Container>
-      <Container>
-        <Table responsive>
-          <thead>
-            <tr>
-              <th>Chain</th>
-              <th>Current height</th>
-              <th>Start height</th>
-              <th>Best block hash</th>
-              <th>Details</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Main</td>
-              <td>1896819</td>
-              <td>1732322</td>
-              <td>
-                00000000294f816121e3f5852b9dea772c590b5ffaa1cfd79be46499879065f2
-              </td>
-              <td>
-                <Button variant='primary'>Explore</Button>
-              </td>
-            </tr>
-            <tr>
-              <td>Fork 1</td>
-              <td>1894344</td>
-              <td>1894322</td>
-              <td>
-                000000002db48f25d7a79bc6b7d45d70d77e2ebf13aa79e025dd013be2556cce
-              </td>
-              <td>
-                <Button variant='primary'>Explore</Button>
-              </td>
-            </tr>
-          </tbody>
-        </Table>
-      </Container>
+      <h1 style={{ textAlign: 'center' }}>
+        Bitcoin Fork Explorer
+      </h1>
+      <ChainsList chains={chains} />
     </Container>
   );
 }

@@ -56,6 +56,7 @@ contract Relay {
         return chain.blocks[height];
     }
 
+    // TODO: could be `get_number_of_chains`
     // gets the highest chain id
     function get_max_chain_id() public view returns (uint) {
         return chain_ids;

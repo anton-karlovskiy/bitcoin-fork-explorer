@@ -1,0 +1,29 @@
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-item {
+  width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hash-item {
+  flex-grow: 1;
+}
+
+.title-item {
+  font-weight: 700;
+}
+
+.flex-item:not(:first-child) {
+  margin-left: 12px;
+}
+
+.flex-container:not(:first-child) {
+  margin-top: 12px;
+}
