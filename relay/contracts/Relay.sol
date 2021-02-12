@@ -21,7 +21,7 @@ contract Relay {
     mapping (uint => Chain) chains;
     // chain at position 0 is the main chain, others are forks
     mapping (uint => uint) sorted_chains;
-    // maxium chain id
+    // maximum chain id
     uint chain_ids;
 
     // this function is a vast over-simplification

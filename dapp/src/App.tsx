@@ -1,5 +1,6 @@
 
 import React from 'react';
+// TODO: should not use `react-bootstrap` due to an overhead
 import {
   Col,
   Container,
@@ -9,6 +10,7 @@ import {
 } from 'react-bootstrap';
 import { RelayLib } from 'relay';
 
+// TODO: should not use SASS in react development
 import './_general.scss';
 
 function App() {
@@ -23,6 +25,12 @@ function App() {
       try {
         const id = await relay.getMaxChainId();
         console.log(id);
+
+        const chainMetadata = await relay.getChainAtPosition(1);
+        console.log('***** chainMetadata => ', chainMetadata);
+
+        const blockHash = await relay.getBlocksForChainId(0, 0);
+        console.log('***** blockHash => ', blockHash);
       } catch {
         console.error(
           'Failed to connect to contract! Please make sure your local hardhat node is running, and Metamask is connected to your localhost RPC (RPC URL: \'http://localhost:8545\', chain ID: \'31337\').'
