@@ -8,11 +8,10 @@ import { ChainMetadata } from 'utils/interfaces/chain-metadata';
 const Home = () => {
   React.useEffect(() => {
     (async () => {
-      const relay = new RelayLib();
-      await relay.init();
-
       try {
         // TODO: should show loading UX
+        const relay = new RelayLib();
+        await relay.init();
 
         // TODO: could be `numberOfChains`
         const maxChainId = await relay.getMaxChainId();
@@ -26,6 +25,7 @@ const Home = () => {
         // TODO: later
         // const blockHash = await relay.getBlocksForChainId(0, 0);
       } catch {
+        // TODO: should integrate an error handler
         console.error(
           `Failed to connect to contract!` +
           `Please make sure your local hardhat node is running, ` +
