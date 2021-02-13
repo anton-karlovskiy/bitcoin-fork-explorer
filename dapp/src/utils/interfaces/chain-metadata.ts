@@ -4,4 +4,4 @@ export interface ChainMetadata {
   startHeight: number,
   currentHeight: number,
   bestBlockHash: string
-};
+}

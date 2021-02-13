@@ -13,7 +13,7 @@ const Home = React.lazy(() =>
   import(/* webpackChunkName: 'home' */ 'pages/Home')
 );
 
-function App() {
+const App = () => {
   // TODO: read the chain elements from the lib (smart contract)
   // TODO: display the different block headers/forks
 
@@ -33,6 +33,6 @@ function App() {
       </React.Suspense>
     </Layout>
   );
-}
+};
 
 export default App;

@@ -3,6 +3,8 @@
     "TTFB",
     "browserslist",
     "clsx",
-    "hocs"
+    "eqeqeq",
+    "hocs",
+    "nonwords"
   ]
 }

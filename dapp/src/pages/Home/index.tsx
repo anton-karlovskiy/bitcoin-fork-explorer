@@ -25,7 +25,9 @@ const Home = () => {
         // const blockHash = await relay.getBlocksForChainId(0, 0);
       } catch {
         console.error(
-          'Failed to connect to contract! Please make sure your local hardhat node is running, and Metamask is connected to your localhost RPC (RPC URL: \'http://localhost:8545\', chain ID: \'31337\').'
+          `Failed to connect to contract!` +
+          `Please make sure your local hardhat node is running, ` +
+          `and Metamask is connected to your localhost RPC (RPC URL: 'http://localhost:8545', chain ID: '31337').`
         );
       }
     })();
