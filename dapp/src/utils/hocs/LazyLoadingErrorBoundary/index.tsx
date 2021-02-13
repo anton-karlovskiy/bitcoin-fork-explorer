@@ -23,6 +23,7 @@ class LazyLoadingErrorBoundary extends React.Component<Props, State> {
 
   // eslint-disable-next-line require-jsdoc
   public componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    // eslint-disable-next-line no-console
     console.error('Uncaught error:', error, errorInfo);
   }
 

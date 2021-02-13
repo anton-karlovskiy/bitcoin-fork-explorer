@@ -1,7 +1,7 @@
 
-import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 
+import LinkButton from 'components/LinkButton';
 import {
   PAGES,
   URL_PARAMS
@@ -55,18 +55,21 @@ const ChainsList = ({ chains }: Props) => {
               {value}
             </span>
           ))}
-          <Link
-            to={{
-              pathname: `${PAGES.CHAIN}/${chain.chainId}`,
-              search: queryString.stringify({
-                [URL_PARAMS.START_HEIGHT]: chain.startHeight,
-                [URL_PARAMS.CURRENT_HEIGHT]: chain.currentHeight
-              })
+          <LinkButton
+            linkProps={{
+              to: {
+                pathname: `${PAGES.CHAIN}/${chain.chainId}`,
+                search: queryString.stringify({
+                  [URL_PARAMS.START_HEIGHT]: chain.startHeight,
+                  [URL_PARAMS.CURRENT_HEIGHT]: chain.currentHeight
+                })
+              }
+            }}
+            buttonProps={{
+              className: styles['flex-item']
             }}>
-            <button className={styles['flex-item']}>
-              Explore
-            </button>
-          </Link>
+            Explore
+          </LinkButton>
         </div>
       ))}
     </>
