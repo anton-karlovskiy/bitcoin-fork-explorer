@@ -1,6 +1,7 @@
 
 import * as React from 'react';
 import { RelayLib } from 'relay';
+import BlocksTree from 'components/BlocksTree';
 
 import ChainsList from 'components/ChainsList';
 import { ChainMetadata } from 'utils/interfaces/chain-metadata';
@@ -41,6 +42,7 @@ const Home = () => {
   return (
     <>
       <ChainsList chains={chains} />
+      <BlocksTree />
     </>
   );
 };
