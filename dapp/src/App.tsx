@@ -13,6 +13,10 @@ const Home = React.lazy(() =>
   import(/* webpackChunkName: 'home' */ 'pages/Home')
 );
 
+const Chain = React.lazy(() =>
+  import(/* webpackChunkName: 'chain' */ 'pages/Chain')
+);
+
 const App = () => {
   // TODO: read the chain elements from the lib (smart contract)
   // TODO: display the different block headers/forks
@@ -26,6 +30,10 @@ const App = () => {
         <LazyLoadingErrorBoundary>
           <Switch>
             <Route
+              path={PAGES.CHAIN}
+              component={Chain} />
+            <Route
+              exact
               path={PAGES.HOME}
               component={Home} />
           </Switch>

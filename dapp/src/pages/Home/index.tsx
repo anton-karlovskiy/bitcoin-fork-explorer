@@ -12,6 +12,8 @@ const Home = () => {
       await relay.init();
 
       try {
+        // TODO: should show loading UX
+
         // TODO: could be `numberOfChains`
         const maxChainId = await relay.getMaxChainId();
         const chainGetters =
