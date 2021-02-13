@@ -12,13 +12,10 @@ module.exports = {
     'react-app/jest',
     'google'
   ],
-  parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true
-    }
+    parser: 'babel-eslint'
   },
   settings: {
     react: {
