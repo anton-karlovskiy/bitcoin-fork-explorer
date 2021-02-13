@@ -33,8 +33,7 @@
   },
   "lint-staged": {
     "*.+(js|jsx|ts|tsx)": [
-      "eslint --fix --ext .ts,.tsx,.js,.jsx --ignore-path .gitignore .",
-      "git add"
+      "eslint --fix --ext .ts,.tsx,.js,.jsx --ignore-path .gitignore ."
     ]
   },
   "husky": {
@@ -56,7 +55,7 @@
   },
   "devDependencies": {
     "eslint-config-google": "^0.14.0",
-    "husky": "^5.0.9",
+    "husky": "v4.3.8",
     "lint-staged": "^10.5.4"
   }
 }
