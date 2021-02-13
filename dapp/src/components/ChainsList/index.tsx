@@ -1,7 +1,12 @@
 
 import clsx from 'clsx';
 
+import { ChainMetadata } from 'utils/interfaces/chain-metadata';
 import styles from './chains-list.module.css';
+
+interface Props {
+  chains: Array<ChainMetadata>;
+}
 
 const TITLES = [
   'Chain ID',
@@ -13,7 +18,7 @@ const TITLES = [
 
 const HASH_INDEX = 3;
 
-const ChainsList = ({ chains }) => {
+const ChainsList = ({ chains }: Props) => {
   return (
     <>
       <div className={styles['flex-container']}>
