@@ -41,7 +41,6 @@ class RelayLib {
     );
   }
 
-  // TODO: should add exception handling like invalid position
   async getChainAtPosition(position: number): Promise<ChainMetadata> {
     if (!this.relay) {
       throw new Error("Lib not initialised");
@@ -57,7 +56,6 @@ class RelayLib {
     };
   }
 
-  // TODO: should add exception handling like invalid id or height
   async getBlocksForChainId(id: number, height: number): Promise<string> {
     if (!this.relay) {
       throw new Error("Lib not initialised");
