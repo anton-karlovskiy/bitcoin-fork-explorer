@@ -10,8 +10,8 @@ interface Props {
 
 const TITLES = [
   'Chain ID',
-  'Current height',
   'Start height',
+  'Current height',
   'Best block hash',
   'Details'
 ];
