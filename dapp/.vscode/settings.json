@@ -4,6 +4,7 @@
     "browserslist",
     "clsx",
     "eqeqeq",
+    "eslintignore",
     "hocs",
     "nonwords"
   ],
