@@ -1,6 +1,9 @@
 
 import * as React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import {
+  Switch,
+  Route
+} from 'react-router-dom';
 
 import Layout from 'parts/Layout';
 import LazyLoadingErrorBoundary from 'utils/hocs/LazyLoadingErrorBoundary';
@@ -29,9 +32,6 @@ const Chain = React.lazy(() =>
 
 const App = () => (
   <Layout>
-    <h1 style={{ textAlign: 'center' }}>
-      Bitcoin Fork Explorer
-    </h1>
     <React.Suspense fallback='Loading...'>
       <LazyLoadingErrorBoundary>
         <Switch>

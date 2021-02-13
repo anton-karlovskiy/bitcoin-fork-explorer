@@ -27,6 +27,7 @@ const Home = () => {
       } catch {
         // TODO: should integrate an error handler
         console.error(
+          `[Home] ` +
           `Failed to connect to contract!` +
           `Please make sure your local hardhat node is running, ` +
           `and Metamask is connected to your localhost RPC (RPC URL: 'http://localhost:8545', chain ID: '31337').`
