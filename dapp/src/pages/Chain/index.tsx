@@ -1,8 +1,10 @@
 
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { RelayLib } from 'relay';
 
 import useQuery from 'utils/hooks/use-query';
+import convertToNumber from 'utils/helpers/convert-to-number';
 import { URL_PARAMS } from 'utils/constants/links';
 
 interface Params {
@@ -21,37 +23,55 @@ const Chain = () => {
   const [startHeight, setStartHeight] = React.useState<number>();
   const [currentHeight, setCurrentHeight] = React.useState<number>();
 
+  const strChainId: string = params.id ?? '';
+  const strStartHeight: string = query.get(URL_PARAMS.START_HEIGHT) ?? '';
+  const strCurrentHeight: string = query.get(URL_PARAMS.CURRENT_HEIGHT) ?? '';
+
+  const [blocks, setBlocks] = React.useState<string[]>([]);
+
   React.useEffect(() => {
     try {
-      if (!params) return;
-      if (!query) return;
+      if (!strChainId) return;
+      if (!strStartHeight) return;
+      if (!strCurrentHeight) return;
 
-      const theChainId: string = params.id ?? '';
-      if (checkInvalidParam(theChainId)) {
+      if (checkInvalidParam(strChainId)) {
         throw new Error('Invalid chain ID!');
-      } else {
-        setChainId(Number(theChainId));
       }
+      const numericChainId = convertToNumber(strChainId);
+      setChainId(numericChainId);
 
-      const theStartHeight: string = query.get(URL_PARAMS.START_HEIGHT) ?? '';
-      if (checkInvalidParam(theStartHeight)) {
+      if (checkInvalidParam(strStartHeight)) {
         throw new Error('Invalid start height!');
-      } else {
-        setStartHeight(Number(theStartHeight));
       }
+      const numericStartHeight = convertToNumber(strStartHeight);
+      setStartHeight(numericStartHeight);
 
-      const theCurrentHeight: string = query.get(URL_PARAMS.CURRENT_HEIGHT) ?? '';
-      if (checkInvalidParam(theCurrentHeight)) {
+      if (checkInvalidParam(strCurrentHeight)) {
         throw new Error('Invalid current height!');
-      } else {
-        setCurrentHeight(Number(theCurrentHeight));
       }
+      const numericCurrentHeight = convertToNumber(strCurrentHeight);
+      setCurrentHeight(numericCurrentHeight);
+
+      (async () => {
+        const relay = new RelayLib();
+        await relay.init();
+
+        const blocksLength = numericCurrentHeight - numericStartHeight + 1;
+        const blockGetters =
+          Array<number>(blocksLength)
+            .fill(0)
+            .map((_, index) => relay.getBlocksForChainId(numericChainId, index + numericStartHeight));
+        const theBlocks = await Promise.all(blockGetters);
+        setBlocks(theBlocks);
+      })();
     } catch (error) {
       console.error('[Chain] error.message => ', error.message);
     }
   }, [
-    params,
-    query
+    strChainId,
+    strStartHeight,
+    strCurrentHeight
   ]);
 
   return (
@@ -59,6 +79,9 @@ const Chain = () => {
       <div>Chain ID: {chainId}</div>
       <div>Start Height: {startHeight}</div>
       <div>Current Height: {currentHeight}</div>
+      {blocks.map(block => (
+        <div key={block}>{block}</div>
+      ))}
     </>
   );
 };
