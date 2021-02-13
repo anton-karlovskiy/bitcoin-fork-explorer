@@ -1,8 +1,15 @@
 
+import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 
+import {
+  PAGES,
+  URL_PARAMS
+} from 'utils/constants/links';
 import { ChainMetadata } from 'utils/interfaces/chain-metadata';
 import styles from './chains-list.module.css';
+
+const queryString = require('query-string');
 
 interface Props {
   chains: Array<ChainMetadata>;
@@ -48,9 +55,18 @@ const ChainsList = ({ chains }: Props) => {
               {value}
             </span>
           ))}
-          <button className={styles['flex-item']}>
-            Explore
-          </button>
+          <Link
+            to={{
+              pathname: `${PAGES.CHAIN}/${chain.chainId}`,
+              search: queryString.stringify({
+                [URL_PARAMS.START_HEIGHT]: chain.startHeight,
+                [URL_PARAMS.CURRENT_HEIGHT]: chain.currentHeight
+              })
+            }}>
+            <button className={styles['flex-item']}>
+              Explore
+            </button>
+          </Link>
         </div>
       ))}
     </>

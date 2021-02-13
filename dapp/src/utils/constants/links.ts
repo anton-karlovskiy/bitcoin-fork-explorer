@@ -7,7 +7,7 @@ const URL_PARAMS = Object.freeze({
 
 const PAGES = Object.freeze({
   HOME: '/',
-  CHAIN: `/chain/:${URL_PARAMS.ID}`
+  CHAIN: '/chain'
 });
 
 export {
