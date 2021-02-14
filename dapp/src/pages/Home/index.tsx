@@ -1,25 +1,24 @@
 
 import * as React from 'react';
-import { RelayLib } from 'relay';
 import BlocksTree from 'components/BlocksTree';
 
 import ChainsList from 'components/ChainsList';
-import { ChainMetadata } from 'utils/interfaces/chain-metadata';
+import getRelayInstance from 'utils/helpers/get-relay-instance';
+import ChainMetadata from 'utils/interfaces/chain-metadata';
 
 const Home = () => {
   React.useEffect(() => {
     (async () => {
       try {
         // TODO: should show loading UX
-        const relay = new RelayLib();
-        await relay.init();
+        const relayInstance = await getRelayInstance();
 
         // TODO: could be `numberOfChains`
-        const maxChainId = await relay.getMaxChainId();
+        const maxChainId = await relayInstance.getMaxChainId();
         const chainGetters =
           Array<number>(maxChainId)
             .fill(0)
-            .map((_, index) => relay.getChainAtPosition(index));
+            .map((_, index) => relayInstance.getChainAtPosition(index));
         const theChains = await Promise.all(chainGetters);
         setChains(theChains);
 
@@ -42,7 +41,7 @@ const Home = () => {
   return (
     <>
       <ChainsList chains={chains} />
-      <BlocksTree />
+      <BlocksTree chains={chains} />
     </>
   );
 };

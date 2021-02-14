@@ -1,9 +1,9 @@
 
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
-import { RelayLib } from 'relay';
 
 import useQuery from 'utils/hooks/use-query';
+import getBlockHashes from 'utils/helpers/get-block-hashes';
 import convertToNumber from 'utils/helpers/convert-to-number';
 import { URL_PARAMS } from 'utils/constants/links';
 
@@ -27,7 +27,7 @@ const Chain = () => {
   const strStartHeight: string = query.get(URL_PARAMS.START_HEIGHT) ?? '';
   const strCurrentHeight: string = query.get(URL_PARAMS.CURRENT_HEIGHT) ?? '';
 
-  const [blocks, setBlocks] = React.useState<string[]>([]);
+  const [blockHashes, setBlockHashes] = React.useState<string[]>([]);
 
   React.useEffect(() => {
     try {
@@ -54,16 +54,8 @@ const Chain = () => {
       setCurrentHeight(numericCurrentHeight);
 
       (async () => {
-        const relay = new RelayLib();
-        await relay.init();
-
-        const blocksLength = numericCurrentHeight - numericStartHeight + 1;
-        const blockGetters =
-          Array<number>(blocksLength)
-            .fill(0)
-            .map((_, index) => relay.getBlocksForChainId(numericChainId, index + numericStartHeight));
-        const theBlocks = await Promise.all(blockGetters);
-        setBlocks(theBlocks);
+        const theBlockHashes = await getBlockHashes(numericChainId, numericStartHeight, numericCurrentHeight);
+        setBlockHashes(theBlockHashes);
       })();
     } catch (error) {
       console.error('[Chain] error.message => ', error.message);
@@ -76,11 +68,13 @@ const Chain = () => {
 
   return (
     <>
+      {/* TODO: could be `ChainMeta` */}
       <div>Chain ID: {chainId}</div>
       <div>Start Height: {startHeight}</div>
       <div>Current Height: {currentHeight}</div>
-      {blocks.map(block => (
-        <div key={block}>{block}</div>
+      {/* TODO: could be `BlockHashesList` */}
+      {blockHashes.map(blockHash => (
+        <div key={blockHash}>{blockHash}</div>
       ))}
     </>
   );
