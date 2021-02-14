@@ -1,0 +1,9 @@
+
+.chain-meta {
+  width: 200px;
+}
+
+.chain-meta-item {
+  display: flex;
+  justify-content: space-between;
+}

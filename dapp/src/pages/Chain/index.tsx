@@ -6,6 +6,7 @@ import useQuery from 'utils/hooks/use-query';
 import getBlockHashes from 'utils/helpers/get-block-hashes';
 import convertToNumber from 'utils/helpers/convert-to-number';
 import { URL_PARAMS } from 'utils/constants/links';
+import ChainMeta from 'components/ChainMeta';
 
 interface Params {
   id: string;
@@ -68,10 +69,10 @@ const Chain = () => {
 
   return (
     <>
-      {/* TODO: could be `ChainMeta` */}
-      <div>Chain ID: {chainId}</div>
-      <div>Start Height: {startHeight}</div>
-      <div>Current Height: {currentHeight}</div>
+      <ChainMeta
+        chainId={chainId}
+        startHeight={startHeight}
+        currentHeight={currentHeight} />
       {/* TODO: could be `BlockHashesList` */}
       {blockHashes.map(blockHash => (
         <div key={blockHash}>{blockHash}</div>
