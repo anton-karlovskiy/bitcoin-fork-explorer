@@ -38,18 +38,20 @@ const ChainMeta = ({
   ];
 
   return (
-    <div className={styles['chain-meta']}>
+    <ul className={styles['chain-meta']}>
       {lines.map(line => (
-        <>
+        <li
+          key={line.title}
+          className={styles['chain-meta-item']}>
           {line.condition && (
-            <div className={styles['chain-meta-item']}>
+            <>
               <strong>{line.title}</strong>
               <span>{line.value}</span>
-            </div>
+            </>
           )}
-        </>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
 

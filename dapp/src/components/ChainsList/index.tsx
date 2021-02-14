@@ -26,8 +26,8 @@ const TITLES = [
 const HASH_INDEX = 3;
 
 const ChainsList = ({ chains }: Props) => (
-  <>
-    <div className={styles['flex-container']}>
+  <ul>
+    <li className={styles['flex-container']}>
       {TITLES.map((title, index) => (
         <span
           key={title}
@@ -39,9 +39,9 @@ const ChainsList = ({ chains }: Props) => (
           {title}
         </span>
       ))}
-    </div>
+    </li>
     {chains.map(chain => (
-      <div
+      <li
         key={chain.chainId}
         className={styles['flex-container']}>
         {Object.values(chain).map((value, index) => (
@@ -69,9 +69,9 @@ const ChainsList = ({ chains }: Props) => (
           }}>
           Explore
         </LinkButton>
-      </div>
+      </li>
     ))}
-  </>
+  </ul>
 );
 
 export default ChainsList;
