@@ -2,7 +2,8 @@
 const URL_PARAMS = Object.freeze({
   ID: 'id',
   START_HEIGHT: 'startHeight',
-  CURRENT_HEIGHT: 'currentHeight'
+  CURRENT_HEIGHT: 'currentHeight',
+  HEIGHT: 'height'
 });
 
 const PAGES = Object.freeze({

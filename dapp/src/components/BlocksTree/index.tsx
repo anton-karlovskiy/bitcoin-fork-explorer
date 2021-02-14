@@ -1,10 +1,17 @@
 
 import * as React from 'react';
+import { useHistory } from 'react-router-dom';
 import Tree from 'react-d3-tree';
 
 import getBlockHashes from 'utils/helpers/get-block-hashes';
 import ChainMetadata from 'utils/interfaces/chain-metadata';
+import {
+  PAGES,
+  URL_PARAMS
+} from 'utils/constants/links';
 import './blocks-tree.css';
+
+const queryString = require('query-string');
 
 interface Props {
   chains: Array<ChainMetadata>;
@@ -31,6 +38,8 @@ const defaultTreeNodeTemplate: TreeNode = Object.freeze({
   }
 });
 
+const SEPARATOR = ': ';
+
 const addBlockHeaderInChain = (
   treeNode: TreeNode,
   height: number,
@@ -53,14 +62,14 @@ const addBlockHeaderInChain = (
   const fullBlockHash = chainBlockHashes[height - chainStartHeight];
   if (height === chainCurrentHeight) {
     // Best block
-    treeNode.name = `Current Height: ${height.toString()}`;
+    treeNode.name = `Current Height${SEPARATOR}${height.toString()}`;
     treeNode.attributes = {
       ...treeNode.attributes,
       blockHash: `${fullBlockHash.substring(0, 6)}...${fullBlockHash.substr(fullBlockHash.length - 4)}`
     };
   } else {
     // Non-best block
-    treeNode.name = `height: ${height.toString()}`;
+    treeNode.name = `height${SEPARATOR}${height.toString()}`;
     treeNode.attributes = {
       ...treeNode.attributes,
       blockHash: `${fullBlockHash.substring(0, 6)}...`
@@ -84,6 +93,8 @@ const INITIAL_POSITION: Point = Object.freeze({
 });
 
 const BlocksTree = ({ chains }: Props) => {
+  const history = useHistory();
+
   const [treeData, setTreeData] = React.useState<TreeNode>();
 
   React.useEffect(() => {
@@ -133,6 +144,22 @@ const BlocksTree = ({ chains }: Props) => {
     })();
   }, [chains]);
 
+  const handleTreeNodeClick = (...args: any) => {
+    const treeNode: TreeNode = args[0];
+    const chainId = Number(treeNode.attributes.chainId);
+    const blockHeight = treeNode.name.split(SEPARATOR)[1];
+    const chainStartHeight = chains[chainId].startHeight;
+    const chainCurrentHeight = chains[chainId].currentHeight;
+    history.push({
+      pathname: `${PAGES.CHAIN}/${chainId}`,
+      search: queryString.stringify({
+        [URL_PARAMS.START_HEIGHT]: chainStartHeight,
+        [URL_PARAMS.CURRENT_HEIGHT]: chainCurrentHeight,
+        [URL_PARAMS.HEIGHT]: blockHeight
+      })
+    });
+  };
+
   return (
     <div
       id='treeWrapper'
@@ -142,13 +169,12 @@ const BlocksTree = ({ chains }: Props) => {
       {treeData && (
         <Tree
           data={treeData}
-          translate={{
-            x: INITIAL_POSITION.x,
-            y: INITIAL_POSITION.y
-          }}
+          translate={INITIAL_POSITION}
           rootNodeClassName='node__root'
           branchNodeClassName='node__branch'
-          leafNodeClassName='node__leaf' />
+          leafNodeClassName='node__leaf'
+          collapsible={false}
+          onNodeClick={handleTreeNodeClick} />
       )}
     </div>
   );
