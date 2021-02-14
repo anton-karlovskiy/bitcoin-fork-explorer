@@ -7,9 +7,9 @@ import {
 import Button from 'components/UI/Button';
 
 interface Props {
-  linkProps: LinkProps,
-  buttonProps?: {},
-  children: React.ReactNode
+  linkProps: LinkProps;
+  buttonProps?: {};
+  children: React.ReactNode;
 }
 
 const LinkButton = ({

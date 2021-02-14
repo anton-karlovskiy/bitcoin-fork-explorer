@@ -8,7 +8,7 @@ import convertToNumber from 'utils/helpers/convert-to-number';
 import { URL_PARAMS } from 'utils/constants/links';
 
 interface Params {
-  id: string
+  id: string;
 }
 
 const checkInvalidParam = (param: string): boolean => {

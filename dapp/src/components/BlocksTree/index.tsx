@@ -11,7 +11,7 @@ interface Props {
 }
 
 interface ChainData extends ChainMetadata {
-  blockHashes: string[]
+  blockHashes: string[];
 }
 
 interface TreeNode {
@@ -73,6 +73,16 @@ const addBlockHeaderInChain = (
   };
 };
 
+interface Point {
+  x: number;
+  y: number;
+}
+
+const INITIAL_POSITION: Point = Object.freeze({
+  x: 60,
+  y: 300
+});
+
 // TODO: should be a container not a component
 const BlocksTree = ({ chains }: Props) => {
   const [treeData, setTreeData] = React.useState<TreeNode>();
@@ -94,7 +104,7 @@ const BlocksTree = ({ chains }: Props) => {
           // Find the start tree node of a fork chain
           if (chainId > 0) {
             interface NoTreeLeaf extends TreeNode {
-              children: TreeNode[]
+              children: TreeNode[];
             }
             // Find the parent tree node of the start tree node in the main chain
             [...Array(startHeight - 1)].forEach(_ => {
@@ -133,6 +143,10 @@ const BlocksTree = ({ chains }: Props) => {
       {treeData && (
         <Tree
           data={treeData}
+          translate={{
+            x: INITIAL_POSITION.x,
+            y: INITIAL_POSITION.y
+          }}
           rootNodeClassName='node__root'
           branchNodeClassName='node__branch'
           leafNodeClassName='node__leaf' />
