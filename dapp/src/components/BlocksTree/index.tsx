@@ -83,7 +83,6 @@ const INITIAL_POSITION: Point = Object.freeze({
   y: 300
 });
 
-// TODO: should be a container not a component
 const BlocksTree = ({ chains }: Props) => {
   const [treeData, setTreeData] = React.useState<TreeNode>();
 

@@ -21,9 +21,6 @@ const Home = () => {
             .map((_, index) => relayInstance.getChainAtPosition(index));
         const theChains = await Promise.all(chainGetters);
         setChains(theChains);
-
-        // TODO: later
-        // const blockHash = await relay.getBlocksForChainId(0, 0);
       } catch {
         // TODO: should integrate an error handler
         console.error(

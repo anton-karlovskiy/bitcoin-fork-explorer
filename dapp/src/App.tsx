@@ -23,8 +23,6 @@ const Chain = React.lazy(() =>
 
 /**
  * TODO:
- * Read the chain elements from the lib (smart contract).
- * Display the different block headers/forks.
  * Could add a router guard to validate start_height and current_height against Chain page.
  */
 
