@@ -15,7 +15,7 @@ const AppBar = () => (
         width={60}
         height={60} />
     </Link>
-    <h1>
+    <h1 className={styles['app-title']}>
       Bitcoin Fork Explorer
     </h1>
   </header>
