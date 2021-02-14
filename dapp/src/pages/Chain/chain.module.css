@@ -1,0 +1,4 @@
+
+.chain > :not(*:first-child) {
+  margin-top: 24px;
+}

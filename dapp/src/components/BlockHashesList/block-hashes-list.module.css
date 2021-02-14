@@ -1,0 +1,31 @@
+
+ul.block-hashes-list > :not(li:first-child) {
+  margin-top: 12px;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.flex-container > :not(*:first-child) {
+  margin-left: 40px;
+}
+
+.height-item {
+  min-width: 120px;
+}
+
+.height-value {
+  text-align: right;
+  padding: 0 24px;
+}
+
+.height-title {
+  text-align: center;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -2,11 +2,13 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 
+import ChainMeta from 'components/ChainMeta';
+import BlockHashesList from 'components/BlockHashesList';
 import useQuery from 'utils/hooks/use-query';
 import getBlockHashes from 'utils/helpers/get-block-hashes';
 import convertToNumber from 'utils/helpers/convert-to-number';
 import { URL_PARAMS } from 'utils/constants/links';
-import ChainMeta from 'components/ChainMeta';
+import styles from './chain.module.css';
 
 interface Params {
   id: string;
@@ -68,16 +70,17 @@ const Chain = () => {
   ]);
 
   return (
-    <>
+    <div className={styles['chain']}>
       <ChainMeta
         chainId={chainId}
         startHeight={startHeight}
         currentHeight={currentHeight} />
-      {/* TODO: could be `BlockHashesList` */}
-      {blockHashes.map(blockHash => (
-        <div key={blockHash}>{blockHash}</div>
-      ))}
-    </>
+      {startHeight !== undefined && (
+        <BlockHashesList
+          blockHashes={blockHashes}
+          startHeight={startHeight} />
+      )}
+    </div>
   );
 };
 
