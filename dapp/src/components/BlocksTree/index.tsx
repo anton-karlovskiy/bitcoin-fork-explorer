@@ -50,17 +50,25 @@ const addBlockHeaderInChain = (
   const chainBlockHashes = chain.blockHashes;
   const chainStartHeight = chain.startHeight;
   const chainId = chain.chainId;
+  const fullBlockHash = chainBlockHashes[height - chainStartHeight];
   if (height === chainCurrentHeight) {
     // Best block
     treeNode.name = `Current Height: ${height.toString()}`;
+    treeNode.attributes = {
+      ...treeNode.attributes,
+      blockHash: `${fullBlockHash.substring(0, 6)}...${fullBlockHash.substr(fullBlockHash.length - 4)}`
+    };
   } else {
     // Non-best block
     treeNode.name = `height: ${height.toString()}`;
+    treeNode.attributes = {
+      ...treeNode.attributes,
+      blockHash: `${fullBlockHash.substring(0, 6)}...`
+    };
   }
 
   treeNode.attributes = {
     ...treeNode.attributes,
-    blockHash: `${chainBlockHashes[height - chainStartHeight].substring(0, 6)}...`,
     chainId: chainId.toString()
   };
 };
