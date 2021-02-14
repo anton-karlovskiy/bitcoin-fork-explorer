@@ -67,19 +67,22 @@ const BlocksTree = ({ chains }: Props) => {
           const blockHashes = await getBlockHashes(chainId, startHeight, currentHeight);
 
           // Create the initial start tree node of the main chain - root tree node
-          let startTreeNode: any = theTreeData;
+          let startTreeNode = theTreeData;
 
           // Find the start tree node of a fork chain
           if (chainId > 0) {
+            interface NoTreeLeaf extends TreeNode {
+              children: TreeNode[]
+            }
             // Find the parent tree node of the start tree node in the main chain
             [...Array(startHeight - 1)].forEach(_ => {
-              startTreeNode = startTreeNode.children[0];
+              startTreeNode = (startTreeNode as NoTreeLeaf).children[0];
             });
 
             // Create the start tree node in the parent tree node
-            startTreeNode.children.push({ ...defaultTreeNodeTemplate });
-            const childrenLength = startTreeNode.children.length;
-            startTreeNode = startTreeNode.children[childrenLength - 1];
+            (startTreeNode as NoTreeLeaf).children.push({ ...defaultTreeNodeTemplate });
+            const childrenLength = (startTreeNode as NoTreeLeaf).children.length;
+            startTreeNode = (startTreeNode as NoTreeLeaf).children[childrenLength - 1];
           }
 
           // Populate block headers in the chain
