@@ -9,7 +9,6 @@ interface Props {
   chains: Array<ChainMetadata>;
 }
 
-// test touch <
 interface ChainData extends ChainMetadata {
   blockHashes: string[]
 }
@@ -21,46 +20,15 @@ interface TreeNode {
   };
   children?: TreeNode[];
 }
-// test touch >
 
-const orgChart = {
-  name: 'CEO',
-  children: [
-    {
-      name: 'Manager',
-      attributes: {
-        blockHash: 'Production'
-      },
-      children: [
-        {
-          name: 'Foreman',
-          attributes: {
-            blockHash: 'Fabrication'
-          },
-          children: [
-            {
-              name: 'Worker'
-            }
-          ]
-        },
-        {
-          name: 'Foreman',
-          attributes: {
-            blockHash: 'Assembly'
-          },
-          children: [
-            {
-              name: 'Worker'
-            }
-          ]
-        }
-      ]
-    }
-  ]
-};
+const defaultTreeNodeTemplate: TreeNode = Object.freeze({
+  name: '',
+  attributes: {
+    blockHash: ''
+  }
+});
 
-// test touch <
-const addBlockHeader = (
+const addBlockHeaderInChain = (
   treeNode: TreeNode,
   height: number,
   chain: ChainData
@@ -70,55 +38,61 @@ const addBlockHeader = (
   if (height < chainCurrentHeight) {
     if (!treeNode.children) {
       treeNode.children = [];
+      treeNode.children.push({ ...defaultTreeNodeTemplate });
     }
 
-    treeNode.children.push({
-      name: '',
-      attributes: {
-        blockHash: ''
-      }
-    });
-    const numberOfTreeNodeChildren = treeNode.children.length;
-
-    addBlockHeader(treeNode.children[numberOfTreeNodeChildren - 1], height + 1, chain);
+    addBlockHeaderInChain(treeNode.children[0], height + 1, chain);
   }
 
   treeNode.name = height.toString();
-  const blockHashes = chain.blockHashes;
-  treeNode.attributes.blockHash = blockHashes[height];
+  const chainBlockHashes = chain.blockHashes;
+  const chainStartHeight = chain.startHeight;
+  treeNode.attributes.blockHash =
+    `${chainBlockHashes[height - chainStartHeight].substring(0, 6)}...`;
 };
-// test touch >
 
 // TODO: should be a container not a component
 const BlocksTree = ({ chains }: Props) => {
+  const [treeData, setTreeData] = React.useState<TreeNode>();
+
   React.useEffect(() => {
     (async () => {
       try {
+        const theTreeData = { ...defaultTreeNodeTemplate };
+
         for (const chain of chains) {
           const chainId = chain.chainId;
           const startHeight = chain.startHeight;
           const currentHeight = chain.currentHeight;
           const blockHashes = await getBlockHashes(chainId, startHeight, currentHeight);
-          console.log('***** blockHashes => ', blockHashes);
 
-          // test touch <
-          const rootTreeNode = {
-            name: '',
-            attributes: {
-              blockHash: ''
-            }
-          };
-          const chainData = {
+          // Create the initial start tree node of the main chain - root tree node
+          let startTreeNode: any = theTreeData;
+
+          // Find the start tree node of a fork chain
+          if (chainId > 0) {
+            // Find the parent tree node of the start tree node in the main chain
+            [...Array(startHeight - 1)].forEach(_ => {
+              startTreeNode = startTreeNode.children[0];
+            });
+
+            // Create the start tree node in the parent tree node
+            startTreeNode.children.push({ ...defaultTreeNodeTemplate });
+            const childrenLength = startTreeNode.children.length;
+            startTreeNode = startTreeNode.children[childrenLength - 1];
+          }
+
+          // Populate block headers in the chain
+          const chainData: ChainData = {
             chainId,
             startHeight,
             currentHeight,
             bestBlockHash: chain.bestBlockHash,
             blockHashes
           };
-          addBlockHeader(rootTreeNode, 0, chainData);
-          console.log('***** rootTreeNode => ', rootTreeNode);
-          // test touch >
+          addBlockHeaderInChain(startTreeNode, startHeight, chainData);
         }
+        setTreeData(theTreeData);
       } catch (error) {
         console.error('[BlocksTree] error.message => ', error.message);
       }
@@ -131,7 +105,7 @@ const BlocksTree = ({ chains }: Props) => {
       style={{
         height: 600
       }}>
-      <Tree data={orgChart} />
+      {treeData && <Tree data={treeData} />}
     </div>
   );
 };
