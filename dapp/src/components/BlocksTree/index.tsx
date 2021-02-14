@@ -17,7 +17,8 @@ interface ChainData extends ChainMetadata {
 interface TreeNode {
   name: string;
   attributes: {
-    blockHash: string
+    blockHash: string,
+    chainId: string
   };
   children?: TreeNode[];
 }
@@ -25,7 +26,8 @@ interface TreeNode {
 const defaultTreeNodeTemplate: TreeNode = Object.freeze({
   name: '',
   attributes: {
-    blockHash: ''
+    blockHash: '',
+    chainId: ''
   }
 });
 
@@ -45,12 +47,21 @@ const addBlockHeaderInChain = (
     addBlockHeaderInChain(treeNode.children[0], height + 1, chain);
   }
 
-  treeNode.name = `height: ${height.toString()}`;
   const chainBlockHashes = chain.blockHashes;
   const chainStartHeight = chain.startHeight;
+  const chainId = chain.chainId;
+  if (height === chainCurrentHeight) {
+    // Best block
+    treeNode.name = `Current Height: ${height.toString()}`;
+  } else {
+    // Non-best block
+    treeNode.name = `height: ${height.toString()}`;
+  }
+
   treeNode.attributes = {
     ...treeNode.attributes,
-    blockHash: `${chainBlockHashes[height - chainStartHeight].substring(0, 6)}...`
+    blockHash: `${chainBlockHashes[height - chainStartHeight].substring(0, 6)}...`,
+    chainId: chainId.toString()
   };
 };
 
