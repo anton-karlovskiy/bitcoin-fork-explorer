@@ -11,9 +11,7 @@ import {
   PAGES,
   URL_PARAMS
 } from 'utils/constants/links';
-
-// TODO: should not use SASS in react development
-import './_general.scss';
+import './app.css';
 
 const Home = React.lazy(() =>
   import(/* webpackChunkName: 'home' */ 'pages/Home')

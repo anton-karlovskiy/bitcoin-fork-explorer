@@ -1,15 +1,14 @@
 
-// TODO: should not use `react-bootstrap` due to an overhead
-import { Container as BootStrapContainer } from 'react-bootstrap';
+import styles from './container.module.css';
 
 interface Props {
   children: React.ReactNode;
 }
 
 const Container = ({ children }: Props) => (
-  <BootStrapContainer>
+  <div className={styles['container']}>
     {children}
-  </BootStrapContainer>
+  </div>
 );
 
 export default Container;

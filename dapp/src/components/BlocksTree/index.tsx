@@ -4,6 +4,7 @@ import Tree from 'react-d3-tree';
 
 import getBlockHashes from 'utils/helpers/get-block-hashes';
 import ChainMetadata from 'utils/interfaces/chain-metadata';
+import './blocks-tree.css';
 
 interface Props {
   chains: Array<ChainMetadata>;
@@ -108,7 +109,13 @@ const BlocksTree = ({ chains }: Props) => {
       style={{
         height: 600
       }}>
-      {treeData && <Tree data={treeData} />}
+      {treeData && (
+        <Tree
+          data={treeData}
+          rootNodeClassName='node__root'
+          branchNodeClassName='node__branch'
+          leafNodeClassName='node__leaf' />
+      )}
     </div>
   );
 };

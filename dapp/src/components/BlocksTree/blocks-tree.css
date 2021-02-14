@@ -1,0 +1,27 @@
+
+.node__root > circle {
+  fill: var(--palette-secondary-main);
+  r: 20;
+}
+
+.node__branch > circle {
+  fill: var(--palette-warning-main);
+}
+
+.node__leaf > circle {
+  fill: var(--palette-primary-main);
+}
+
+:is(.node__root, .node__branch, .node__leaf) > g {
+  transform: translate(-30px, 30px);
+}
+
+:is(.node__root, .node__branch) :is(.rd3t-label__title, .rd3t-label__attributes) {
+  stroke: var(--palette-text-secondary);
+  stroke-width: 0;
+}
+
+.node__leaf :is(.rd3t-label__title, .rd3t-label__attributes) {
+  stroke: var(--palette-text-secondary);
+  stroke-width: 0.5;
+}
