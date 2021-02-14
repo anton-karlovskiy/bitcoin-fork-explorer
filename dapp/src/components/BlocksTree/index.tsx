@@ -45,11 +45,13 @@ const addBlockHeaderInChain = (
     addBlockHeaderInChain(treeNode.children[0], height + 1, chain);
   }
 
-  treeNode.name = height.toString();
+  treeNode.name = `height: ${height.toString()}`;
   const chainBlockHashes = chain.blockHashes;
   const chainStartHeight = chain.startHeight;
-  treeNode.attributes.blockHash =
-    `${chainBlockHashes[height - chainStartHeight].substring(0, 6)}...`;
+  treeNode.attributes = {
+    ...treeNode.attributes,
+    blockHash: `${chainBlockHashes[height - chainStartHeight].substring(0, 6)}...`
+  };
 };
 
 // TODO: should be a container not a component
