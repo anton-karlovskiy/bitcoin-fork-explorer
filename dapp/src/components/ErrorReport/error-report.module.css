@@ -1,0 +1,5 @@
+
+.error-report {
+  padding: 4px 12px;
+  border: 1px solid var(--palette-error-main);
+}
