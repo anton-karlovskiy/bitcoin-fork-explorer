@@ -170,8 +170,12 @@ const BlocksTree = ({ chains }: Props) => {
     const treeNode: TreeNode = args[0];
     const chainId = Number(treeNode.attributes.chainId);
     const blockHeight = treeNode.name.split(SEPARATOR)[1];
-    const chainStartHeight = chains[chainId].startHeight;
-    const chainCurrentHeight = chains[chainId].currentHeight;
+    const clickedChain = chains.find(chain => chain.chainId === chainId);
+    if (!clickedChain) {
+      throw new Error('Invalid chain clicked!');
+    }
+    const chainStartHeight = clickedChain.startHeight;
+    const chainCurrentHeight = clickedChain.currentHeight;
     history.push({
       pathname: `${PAGES.CHAIN}/${chainId}`,
       search: queryString.stringify({

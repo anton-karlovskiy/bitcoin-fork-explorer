@@ -26,7 +26,18 @@ const Home = () => {
         const theChains = await Promise.all(chainGetters);
         setStatus(FETCHING_STATUSES.RESOLVED);
 
-        setChains(theChains);
+        // Sort the chains according to their `current_height`
+        const mainChain = [...theChains].shift();
+        const forkChains = theChains.slice(1, theChains.length);
+        forkChains.sort(function (a, b) {
+          return b.currentHeight - a.currentHeight;
+        });
+        const sortedChains = [
+          mainChain,
+          ...forkChains
+        ];
+
+        setChains(sortedChains);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(
