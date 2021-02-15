@@ -58,7 +58,10 @@ const Chain = () => {
       setCurrentHeight(numericCurrentHeight);
 
       (async () => {
+        // test touch <
+        // TODO: should add loading UX
         const theBlockHashes = await getBlockHashes(numericChainId, numericStartHeight, numericCurrentHeight);
+        // test touch >
         setBlockHashes(theBlockHashes);
       })();
     } catch (error) {

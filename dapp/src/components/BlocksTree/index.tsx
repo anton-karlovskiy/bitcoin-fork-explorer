@@ -102,11 +102,25 @@ const BlocksTree = ({ chains }: Props) => {
       try {
         const theTreeData = { ...defaultTreeNodeTemplate };
 
+        const allBlockHashGetters =
+          Array<number>(chains.length)
+            .fill(0)
+            .map((_, index) =>
+              getBlockHashes(
+                chains[index].chainId,
+                chains[index].startHeight,
+                chains[index].currentHeight
+              ));
+        // test touch <
+        // TODO: should add loading UX
+        const allBlockHashes = await Promise.all(allBlockHashGetters);
+        // test touch >
+
+        let index = 0;
         for (const chain of chains) {
           const chainId = chain.chainId;
           const startHeight = chain.startHeight;
           const currentHeight = chain.currentHeight;
-          const blockHashes = await getBlockHashes(chainId, startHeight, currentHeight);
 
           // Create the initial start tree node of the main chain - root tree node
           let startTreeNode = theTreeData;
@@ -133,7 +147,7 @@ const BlocksTree = ({ chains }: Props) => {
             startHeight,
             currentHeight,
             bestBlockHash: chain.bestBlockHash,
-            blockHashes
+            blockHashes: allBlockHashes[index++]
           };
           addBlockHeaderInChain(startTreeNode, startHeight, chainData);
         }

@@ -10,7 +10,9 @@ const Home = () => {
   React.useEffect(() => {
     (async () => {
       try {
-        // TODO: should show loading UX
+        // test touch <
+        // TODO: should add loading UX
+        // test touch >
         const relayInstance = await getRelayInstance();
 
         // TODO: could be `numberOfChains`
