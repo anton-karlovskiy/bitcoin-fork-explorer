@@ -29,7 +29,7 @@ const Chain = () => {
   const strChainId: string = params.id ?? '';
   const strStartHeight: string = query.get(URL_PARAMS.START_HEIGHT) ?? '';
   const strCurrentHeight: string = query.get(URL_PARAMS.CURRENT_HEIGHT) ?? '';
-  const strFocusHeight: string = query.get(URL_PARAMS.FOCUS_HEIGHT) ?? '';
+  const strFocusHeight: string | undefined = query.get(URL_PARAMS.FOCUS_HEIGHT) ?? undefined;
 
   const [blockHashes, setBlockHashes] = React.useState<string[]>([]);
 
