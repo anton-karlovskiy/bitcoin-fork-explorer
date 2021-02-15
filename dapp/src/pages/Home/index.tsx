@@ -3,28 +3,31 @@ import * as React from 'react';
 import BlocksTree from 'components/BlocksTree';
 
 import ChainsList from 'components/ChainsList';
+import Loader from 'components/Loader';
+import ErrorReport from 'components/ErrorReport';
 import getRelayInstance from 'utils/helpers/get-relay-instance';
 import ChainMetadata from 'utils/interfaces/chain-metadata';
+import FETCHING_STATUSES from 'utils/constants/fetching-statuses';
 
 const Home = () => {
+  const [status, setStatus] = React.useState(FETCHING_STATUSES.IDLE);
+  const [error, setError] = React.useState(undefined);
+
   React.useEffect(() => {
     (async () => {
       try {
-        // test touch <
-        // TODO: should add loading UX
-        // test touch >
+        setStatus(FETCHING_STATUSES.PENDING);
         const relayInstance = await getRelayInstance();
-
-        // TODO: could be `numberOfChains`
         const maxChainId = await relayInstance.getMaxChainId();
         const chainGetters =
           Array<number>(maxChainId)
             .fill(0)
             .map((_, index) => relayInstance.getChainAtPosition(index));
         const theChains = await Promise.all(chainGetters);
+        setStatus(FETCHING_STATUSES.RESOLVED);
+
         setChains(theChains);
-      } catch {
-        // TODO: should integrate an error handler
+      } catch (error) {
         // eslint-disable-next-line no-console
         console.error(
           `[Home] ` +
@@ -32,18 +35,32 @@ const Home = () => {
           `Please make sure your local hardhat node is running, ` +
           `and Metamask is connected to your localhost RPC (RPC URL: 'http://localhost:8545', chain ID: '31337').`
         );
+        setStatus(FETCHING_STATUSES.REJECTED);
+        setError(error);
       }
     })();
   }, []);
 
   const [chains, setChains] = React.useState<ChainMetadata[]>([]);
 
-  return (
-    <>
-      <ChainsList chains={chains} />
-      <BlocksTree chains={chains} />
-    </>
-  );
+  if (status === FETCHING_STATUSES.IDLE || status === FETCHING_STATUSES.PENDING) {
+    return <Loader centerViewport />;
+  }
+
+  if (status === FETCHING_STATUSES.REJECTED) {
+    return <ErrorReport error={error} />;
+  }
+
+  if (status === FETCHING_STATUSES.RESOLVED) {
+    return (
+      <>
+        <ChainsList chains={chains} />
+        <BlocksTree chains={chains} />
+      </>
+    );
+  }
+
+  return null;
 };
 
 export default Home;

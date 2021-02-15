@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 
 import Layout from 'parts/Layout';
+import Loader from 'components/Loader';
 import LazyLoadingErrorBoundary from 'utils/hocs/LazyLoadingErrorBoundary';
 import {
   PAGES,
@@ -28,7 +29,7 @@ const Chain = React.lazy(() =>
 
 const App = () => (
   <Layout>
-    <React.Suspense fallback='Loading...'>
+    <React.Suspense fallback={<Loader centerViewport />}>
       <LazyLoadingErrorBoundary>
         <Switch>
           <Route

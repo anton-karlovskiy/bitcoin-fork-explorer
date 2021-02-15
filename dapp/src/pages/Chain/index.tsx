@@ -4,10 +4,13 @@ import { useParams } from 'react-router-dom';
 
 import ChainMeta from 'components/ChainMeta';
 import BlockHashesList from 'components/BlockHashesList';
+import Loader from 'components/Loader';
+import ErrorReport from 'components/ErrorReport';
 import useQuery from 'utils/hooks/use-query';
 import getBlockHashes from 'utils/helpers/get-block-hashes';
 import convertToNumber from 'utils/helpers/convert-to-number';
 import { URL_PARAMS } from 'utils/constants/links';
+import FETCHING_STATUSES from 'utils/constants/fetching-statuses';
 import styles from './chain.module.css';
 
 interface Params {
@@ -19,6 +22,9 @@ const checkInvalidNumberParam = (param: string): boolean => {
 };
 
 const Chain = () => {
+  const [status, setStatus] = React.useState(FETCHING_STATUSES.IDLE);
+  const [error, setError] = React.useState(undefined);
+
   const params = useParams<Params>();
   const query: URLSearchParams = useQuery();
 
@@ -58,15 +64,16 @@ const Chain = () => {
       setCurrentHeight(numericCurrentHeight);
 
       (async () => {
-        // test touch <
-        // TODO: should add loading UX
+        setStatus(FETCHING_STATUSES.PENDING);
         const theBlockHashes = await getBlockHashes(numericChainId, numericStartHeight, numericCurrentHeight);
-        // test touch >
+        setStatus(FETCHING_STATUSES.RESOLVED);
         setBlockHashes(theBlockHashes);
       })();
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('[Chain] error.message => ', error.message);
+      setStatus(FETCHING_STATUSES.REJECTED);
+      setError(error);
     }
   }, [
     strChainId,
@@ -82,7 +89,13 @@ const Chain = () => {
         chainId={chainId}
         startHeight={startHeight}
         currentHeight={currentHeight} />
-      {startHeight !== undefined && (
+      {(status === FETCHING_STATUSES.IDLE || status === FETCHING_STATUSES.PENDING) && (
+        <Loader />
+      )}
+      {status === FETCHING_STATUSES.REJECTED && (
+        <ErrorReport error={error} />
+      )}
+      {status === FETCHING_STATUSES.RESOLVED && startHeight !== undefined && (
         <BlockHashesList
           focusHeight={numericFocusHeight}
           blockHashes={blockHashes}

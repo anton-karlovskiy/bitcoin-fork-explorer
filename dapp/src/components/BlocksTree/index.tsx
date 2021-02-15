@@ -3,12 +3,15 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import Tree from 'react-d3-tree';
 
+import Loader from 'components/Loader';
+import ErrorReport from 'components/ErrorReport';
 import getBlockHashes from 'utils/helpers/get-block-hashes';
 import ChainMetadata from 'utils/interfaces/chain-metadata';
 import {
   PAGES,
   URL_PARAMS
 } from 'utils/constants/links';
+import FETCHING_STATUSES from 'utils/constants/fetching-statuses';
 import './blocks-tree.css';
 
 const queryString = require('query-string');
@@ -93,6 +96,9 @@ const INITIAL_POSITION: Point = Object.freeze({
 });
 
 const BlocksTree = ({ chains }: Props) => {
+  const [status, setStatus] = React.useState(FETCHING_STATUSES.IDLE);
+  const [error, setError] = React.useState(undefined);
+
   const history = useHistory();
 
   const [treeData, setTreeData] = React.useState<TreeNode>();
@@ -111,10 +117,9 @@ const BlocksTree = ({ chains }: Props) => {
                 chains[index].startHeight,
                 chains[index].currentHeight
               ));
-        // test touch <
-        // TODO: should add loading UX
+        setStatus(FETCHING_STATUSES.PENDING);
         const allBlockHashes = await Promise.all(allBlockHashGetters);
-        // test touch >
+        setStatus(FETCHING_STATUSES.RESOLVED);
 
         let index = 0;
         for (const chain of chains) {
@@ -155,6 +160,8 @@ const BlocksTree = ({ chains }: Props) => {
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error('[BlocksTree] error.message => ', error.message);
+        setStatus(FETCHING_STATUSES.REJECTED);
+        setError(error);
       }
     })();
   }, [chains]);
@@ -175,24 +182,36 @@ const BlocksTree = ({ chains }: Props) => {
     });
   };
 
-  return (
-    <div
-      id='treeWrapper'
-      style={{
-        height: 600
-      }}>
-      {treeData && (
-        <Tree
-          data={treeData}
-          translate={INITIAL_POSITION}
-          rootNodeClassName='node__root'
-          branchNodeClassName='node__branch'
-          leafNodeClassName='node__leaf'
-          collapsible={false}
-          onNodeClick={handleTreeNodeClick} />
-      )}
-    </div>
-  );
+  if (status === FETCHING_STATUSES.IDLE || status === FETCHING_STATUSES.PENDING) {
+    return <Loader />;
+  }
+
+  if (status === FETCHING_STATUSES.REJECTED) {
+    return <ErrorReport error={error} />;
+  }
+
+  if (status === FETCHING_STATUSES.RESOLVED) {
+    return (
+      <div
+        id='treeWrapper'
+        style={{
+          height: 600
+        }}>
+        {treeData && (
+          <Tree
+            data={treeData}
+            translate={INITIAL_POSITION}
+            rootNodeClassName='node__root'
+            branchNodeClassName='node__branch'
+            leafNodeClassName='node__leaf'
+            collapsible={false}
+            onNodeClick={handleTreeNodeClick} />
+        )}
+      </div>
+    );
+  }
+
+  return null;
 };
 
 export default BlocksTree;
