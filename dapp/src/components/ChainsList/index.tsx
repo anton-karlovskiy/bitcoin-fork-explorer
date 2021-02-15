@@ -44,16 +44,22 @@ const ChainsList = ({ chains }: Props) => (
       <li
         key={chain.chainId}
         className={styles['flex-container']}>
-        {Object.values(chain).map((value, index) => (
-          <span
-            key={index}
-            className={clsx(
-              styles['flex-item'],
-              { [styles['hash-item']]: index === HASH_INDEX }
-            )}>
-            {value}
-          </span>
-        ))}
+        <span
+          className={styles['flex-item']}>
+          {chain.chainId} {chain.chainId === 0 ? '(main)' : '(fork)'}
+        </span>
+        <span
+          className={styles['flex-item']}>
+          {chain.startHeight}
+        </span>
+        <span
+          className={styles['flex-item']}>
+          {chain.currentHeight}
+        </span>
+        <span
+          className={clsx(styles['flex-item'], styles['hash-item'])}>
+          {chain.bestBlockHash}
+        </span>
         <LinkButton
           linkProps={{
             to: {
