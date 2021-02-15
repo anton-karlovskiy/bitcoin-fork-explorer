@@ -139,6 +139,7 @@ const BlocksTree = ({ chains }: Props) => {
         }
         setTreeData(theTreeData);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('[BlocksTree] error.message => ', error.message);
       }
     })();

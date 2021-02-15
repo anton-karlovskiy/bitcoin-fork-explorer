@@ -62,6 +62,7 @@ const Chain = () => {
         setBlockHashes(theBlockHashes);
       })();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('[Chain] error.message => ', error.message);
     }
   }, [

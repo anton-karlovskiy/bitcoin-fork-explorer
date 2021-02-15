@@ -23,6 +23,7 @@ const Home = () => {
         setChains(theChains);
       } catch {
         // TODO: should integrate an error handler
+        // eslint-disable-next-line no-console
         console.error(
           `[Home] ` +
           `Failed to connect to contract!` +
