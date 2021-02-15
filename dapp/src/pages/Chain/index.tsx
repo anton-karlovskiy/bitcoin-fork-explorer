@@ -14,7 +14,7 @@ interface Params {
   id: string;
 }
 
-const checkInvalidParam = (param: string): boolean => {
+const checkInvalidNumberParam = (param: string): boolean => {
   return param === '' || isNaN(Number(param));
 };
 
@@ -29,6 +29,7 @@ const Chain = () => {
   const strChainId: string = params.id ?? '';
   const strStartHeight: string = query.get(URL_PARAMS.START_HEIGHT) ?? '';
   const strCurrentHeight: string = query.get(URL_PARAMS.CURRENT_HEIGHT) ?? '';
+  const strFocusHeight: string = query.get(URL_PARAMS.FOCUS_HEIGHT) ?? '';
 
   const [blockHashes, setBlockHashes] = React.useState<string[]>([]);
 
@@ -38,19 +39,19 @@ const Chain = () => {
       if (!strStartHeight) return;
       if (!strCurrentHeight) return;
 
-      if (checkInvalidParam(strChainId)) {
+      if (checkInvalidNumberParam(strChainId)) {
         throw new Error('Invalid chain ID!');
       }
       const numericChainId = convertToNumber(strChainId);
       setChainId(numericChainId);
 
-      if (checkInvalidParam(strStartHeight)) {
+      if (checkInvalidNumberParam(strStartHeight)) {
         throw new Error('Invalid start height!');
       }
       const numericStartHeight = convertToNumber(strStartHeight);
       setStartHeight(numericStartHeight);
 
-      if (checkInvalidParam(strCurrentHeight)) {
+      if (checkInvalidNumberParam(strCurrentHeight)) {
         throw new Error('Invalid current height!');
       }
       const numericCurrentHeight = convertToNumber(strCurrentHeight);
@@ -69,6 +70,8 @@ const Chain = () => {
     strCurrentHeight
   ]);
 
+  const numericFocusHeight = convertToNumber(strFocusHeight);
+
   return (
     <div className={styles['chain']}>
       <ChainMeta
@@ -77,6 +80,7 @@ const Chain = () => {
         currentHeight={currentHeight} />
       {startHeight !== undefined && (
         <BlockHashesList
+          focusHeight={numericFocusHeight}
           blockHashes={blockHashes}
           startHeight={startHeight} />
       )}

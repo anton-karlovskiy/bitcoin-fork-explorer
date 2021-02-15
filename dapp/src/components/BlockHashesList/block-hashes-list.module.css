@@ -29,3 +29,7 @@ ul.block-hashes-list > :not(li:first-child) {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.highlight {
+  background-color: var(--palette-success-main);
+}

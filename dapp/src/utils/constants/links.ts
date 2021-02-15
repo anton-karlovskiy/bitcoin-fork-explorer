@@ -3,7 +3,7 @@ const URL_PARAMS = Object.freeze({
   ID: 'id',
   START_HEIGHT: 'startHeight',
   CURRENT_HEIGHT: 'currentHeight',
-  HEIGHT: 'height'
+  FOCUS_HEIGHT: 'height'
 });
 
 const PAGES = Object.freeze({

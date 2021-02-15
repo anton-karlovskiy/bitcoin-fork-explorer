@@ -155,7 +155,7 @@ const BlocksTree = ({ chains }: Props) => {
       search: queryString.stringify({
         [URL_PARAMS.START_HEIGHT]: chainStartHeight,
         [URL_PARAMS.CURRENT_HEIGHT]: chainCurrentHeight,
-        [URL_PARAMS.HEIGHT]: blockHeight
+        [URL_PARAMS.FOCUS_HEIGHT]: blockHeight
       })
     });
   };
