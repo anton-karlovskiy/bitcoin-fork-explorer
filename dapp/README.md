@@ -40,3 +40,5 @@ $ npm run start # Or yarn start
   - We could set up state management using [context](https://reactjs.org/docs/context.html) and caching using [react-query](https://github.com/tannerlinsley/react-query), [apollo-client](https://github.com/apollographql/apollo-client), or [swr](https://github.com/vercel/swr). (Re: [Why I Stopped Using Redux](https://dev.to/g_abud/why-i-quit-redux-1knl), [My State Management Mistake](https://epicreact.dev/my-state-management-mistake/))
   - We could use skeleton UI. (Re: [Implementing Skeleton Screens In React](https://www.smashingmagazine.com/2020/04/skeleton-screens-react/))
   - We could use [quicklink](https://github.com/GoogleChromeLabs/quicklink) if there are a lot of pages.
+  - We should set up tags for social media marketing compatible across multiple social media platforms.
+  - etc: https://gist.github.com/anton-karlovskiy/44d143bb7be5e03bf1db53d54f4874fa
