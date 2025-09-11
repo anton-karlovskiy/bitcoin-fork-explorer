@@ -1,8 +1,7 @@
 {
   "cSpell.words": [
-    "TODOs",
-    "TTFB",
     "browserslist",
+    "bundlephobia",
     "clsx",
     "componentization",
     "componentizing",
@@ -13,7 +12,10 @@
     "preprocessors",
     "quicklink",
     "realfavicongenerator",
+    "Solana",
     "tailwindcss",
+    "TODOs",
+    "TTFB",
     "xstate"
   ],
   "typescript.tsdk": "./node_modules/typescript/lib"
