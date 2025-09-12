@@ -3,7 +3,7 @@
 This project is a React-based frontend prototype with a focus on **scalable architecture, clean styling, and performance optimization**.  
 Below are setup instructions, implementation notes, and a roadmap for improvements.  
 
----
+![bitcoin-fork-ui](./bitcoin-fork-ui.gif)
 
 ## 🛠️ Running the Project
 
