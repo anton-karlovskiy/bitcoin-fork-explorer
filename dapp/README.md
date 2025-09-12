@@ -72,7 +72,7 @@ npm run start    # or yarn start
 
 - Additional ideas: [Anton’s TODO gist](https://gist.github.com/anton-karlovskiy/44d143bb7be5e03bf1db53d54f4874fa).
 
-## 🎯 Purpose
+### 🎯 Purpose
 
 This repository demonstrates __best practices for React frontend development__ with an emphasis on:
 
