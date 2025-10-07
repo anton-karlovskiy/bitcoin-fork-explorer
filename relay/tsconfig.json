@@ -5,6 +5,8 @@
     "module": "commonjs",
     "outDir": "dist",
     "declaration": true,
+    "declarationMap": false,
+    "sourceMap": false,
     "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,

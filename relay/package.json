@@ -8,7 +8,7 @@
     "hardhat": "hardhat node",
     "build": "hardhat compile && hardhat typechain && yarn tsc",
     "deploy": "hardhat run scripts/deploy.ts --network localhost",
-    "tsc": "tsc -p . && cp typechain/*.d.ts dist/typechain/"
+    "tsc": "tsc -p . && mkdir -p dist/typechain && cp typechain/*.d.ts dist/typechain/"
   },
   "author": "Interlay",
   "license": "MIT",
